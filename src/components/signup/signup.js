@@ -5,8 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import signupCSS from './signup.module.css';
-const bcrypt = require('bcryptjs');
-const SignUp = () => {
+const SignUp = (props) => {
     const [userExisted, setIsUserExisted] = useState(false);
     const formInputControl = [
         {
@@ -96,9 +95,11 @@ const SignUp = () => {
                                 }
                             }
                             const {confirmPassword, ...userValues} = values;
+                            let encrypted = props.encryptPassword(values.password);
                             usersValue.push({
                                 ...userValues,
-                                password: bcrypt.hashSync(userValues.password, bcrypt.genSaltSync())
+                                password:  encrypted.password,
+                                cp: encrypted.cp
                             })
                             localStorage.setItem('registeredUserList', JSON.stringify(usersValue))
                         } catch (error) {

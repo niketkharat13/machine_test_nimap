@@ -5,10 +5,13 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import LogInCSS from './login.module.css';
+import { addMonths } from 'date-fns';
+import {Navigate} from 'react-router-dom';
 const bcrypt = require('bcryptjs');
-const LogIn = () => {
+const LogIn = (props) => {
     const [isWrongPassword, setIsWrongPassword] = useState(false);
     const [isNot_A_User, setIsNot_A_User] = useState(false);
+    const [isSuccessLogged, setIsLoggedIn] = useState(false);
     const formInputControl = [
         {
             label: 'Email',
@@ -49,15 +52,26 @@ const LogIn = () => {
                                 registeredUserList = JSON.parse(registeredUserList);
                                 let userDetails = registeredUserList.filter(u => u.email === values.email);
                                 if (userDetails.length > 0) {
-                                    let doesPasswordMatch = bcrypt.compareSync(values.password, bcrypt.hashSync(userDetails.password, bcrypt.genSaltSync()));
+                                    let doesPasswordMatch = bcrypt.compareSync(values.password, userDetails[0].password);
+                                    console.log(doesPasswordMatch, 'doesPasswordMatch');
                                     if (doesPasswordMatch) {
-                                        console.log("password match")
+                                        setIsWrongPassword(false);
+                                        setIsNot_A_User(false);
+                                        document.cookie = `logged_in_user=${JSON.stringify(userDetails[0])}; expires=${addMonths(new Date(), 1)}; path=/`;
+                                        props.setIsLoggedInUSer({
+                                            ...userDetails[0],
+                                            decryptedPassword: props.decryptPassword(userDetails[0].cp)
+                                        });
+                                        setIsLoggedIn(true);
+                                        // Thu, 01 Jan 1970 00:00:00 UTC
                                     } else {
                                         setIsWrongPassword(true);
                                     }
                                 } else {
                                     setIsNot_A_User(true);
                                 }
+                            } else {
+                                setIsNot_A_User(true);
                             }
                         } catch (error) {
                             console.log(error)
@@ -94,6 +108,7 @@ const LogIn = () => {
                             }
                             <button type="submit" className='btn-primary btn mt-3'>Login</button>
                             <button className='btn-secondary btn mt-3'>Sign Up</button>
+                            {isSuccessLogged && <Navigate to='/user'/>}
                         </Container>
                     </Form>
                 )}
