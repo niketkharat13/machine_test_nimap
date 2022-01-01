@@ -9,6 +9,7 @@ import './App.css';
 const Login = React.lazy(() => import('./components/login/login'));
 const SignUp = React.lazy(() => import('./components/signup/signup'));
 const User = React.lazy(() => import('./components/User/User'));
+const Task = React.lazy(() => import('./components/Task/Task'));
 let CryptoJS = require("crypto-js");
 const bcrypt = require('bcryptjs');
 function App() {
@@ -33,7 +34,8 @@ function App() {
     }
     
   }, []);
-  console.log(loggedInUser, 'loggedInUser');
+  // console.log(loggedInUser, 'loggedInUser');
+  console.log(isLoggedIn, 'isLoggedIn')
   const decryptPassword  = (cp) => {
     console.log(cp, 'cp');
     let bytes  = CryptoJS.AES.decrypt(cp, 'secret key 123');
@@ -66,13 +68,18 @@ function App() {
               <User loggedInUser={loggedInUser} encryptPassword={encryptPassword} />
             </Suspense>
           }/>
-          <Route path="/" element={<>
+          <Route path="/task" element={
+            <Suspense fallback={<div>Loading...</div>}>
+              <Task userDetails={loggedInUser} />
+            </Suspense>
+          }/>
+          {/* <Route path="/" element={<>
             testing
-          </>}/>
+          </>}/> */}
         </Routes>
-        {
+        {/* {
           !isLoggedIn ? <Navigate to='/login' /> : null
-        }
+        } */}
       </div>
     </BrowserRouter>
   );

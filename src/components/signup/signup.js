@@ -97,6 +97,7 @@ const SignUp = (props) => {
                             const {confirmPassword, ...userValues} = values;
                             let encrypted = props.encryptPassword(values.password);
                             usersValue.push({
+                                id: usersValue.length + 1,
                                 ...userValues,
                                 password:  encrypted.password,
                                 cp: encrypted.cp
