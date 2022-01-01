@@ -5,7 +5,7 @@ import './App.css';
   Routes,
   Route
 } from "react-router-dom";
-// const Login =
+const Login = React.lazy(() => import('./components/login/login'));
 const SignUp = React.lazy(() => import('./components/signup/signup'));
 function App() {
   return (
@@ -15,6 +15,11 @@ function App() {
           <Route path="/signup" element={
             <Suspense fallback={<div>Loading...</div>}>
               <SignUp/>
+            </Suspense>
+          }/>
+          <Route path="/login" element={
+            <Suspense fallback={<div>Loading...</div>}>
+              <Login/>
             </Suspense>
           }/>
           <Route path="/" element={<>

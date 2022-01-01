@@ -4,10 +4,11 @@ import * as Yup from 'yup';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import LogInCSS from './LogIn.module.css';
+import LogInCSS from './login.module.css';
 const bcrypt = require('bcryptjs');
 const LogIn = () => {
-    const [userExisted, setIsUserExisted] = useState(false);
+    const [isWrongPassword, setIsWrongPassword] = useState(false);
+    const [isNot_A_User, setIsNot_A_User] = useState(false);
     const formInputControl = [
         {
             label: 'Email',
@@ -44,40 +45,33 @@ const LogIn = () => {
                     onSubmit={values => {
                         try {
                             let registeredUserList = localStorage.getItem('registeredUserList');
-                            console.log(!registeredUserList, 'registeredUserList');
-                            let usersValue = [];
                             if (registeredUserList !== null) {
-                                usersValue = JSON.parse(registeredUserList);
-                                let isUserExisted = usersValue.filter(u => u.email === values.email);
-                                if (isUserExisted.length > 0) {
-                                    setIsUserExisted(true);
-                                    return;
+                                registeredUserList = JSON.parse(registeredUserList);
+                                let userDetails = registeredUserList.filter(u => u.email === values.email);
+                                if (userDetails.length > 0) {
+                                    let doesPasswordMatch = bcrypt.compareSync(values.password, bcrypt.hashSync(userDetails.password, bcrypt.genSaltSync()));
+                                    if (doesPasswordMatch) {
+                                        console.log("password match")
+                                    } else {
+                                        setIsWrongPassword(true);
+                                    }
+                                } else {
+                                    setIsNot_A_User(true);
                                 }
                             }
-                            const {confirmPassword, ...userValues} = values;
-                            usersValue.push({
-                                ...userValues,
-                                password: bcrypt.hashSync(userValues.password, bcrypt.genSaltSync())
-                            })
-                            localStorage.setItem('registeredUserList', JSON.stringify(usersValue))
-                            // console.log(bcrypt.hashSync(values.password, bcrypt.genSaltSync()));
-                            
                         } catch (error) {
                             console.log(error)
                         }
-                        // const doesPasswordMatch = bcrypt.compareSync("Niket@8184", bcrypt.hashSync(values.password, bcrypt.genSaltSync()))
-                        // console.log(doesPasswordMatch);
-
                     }}
                 >
                 {({ errors, touched }) => (
                     <Form>
                         <Container className="mt-5">
-                            <h1 className="mt-2 mb-5">User Registeration Form</h1>
+                            <h1 className="mt-2 mb-5">Login</h1>
                             {
                                 formInputControl.map((input, index) => {
                                     return (
-                                        <Row key={index} className="mt-2">
+                                        <Row key={index} className="mt-4">
                                             <Col md={4}>
                                                 <label htmlFor={input.id} className="w-100 h-100 d-flex align-items-center justify-content-end">{input.label}</label>
                                             </Col>
@@ -96,9 +90,10 @@ const LogIn = () => {
                                 })
                             }
                             {
-                                userExisted ?  <p className={["m-2", LogInCSS.errormsg].join(" ")}>email id is already existed</p> : null
+                                isWrongPassword ? 'password wrong' : isNot_A_User ? 'not a user' : ""
                             }
-                            <button type="submit" className='btn-primary btn mt-3'>Submit</button>
+                            <button type="submit" className='btn-primary btn mt-3'>Login</button>
+                            <button className='btn-secondary btn mt-3'>Sign Up</button>
                         </Container>
                     </Form>
                 )}
