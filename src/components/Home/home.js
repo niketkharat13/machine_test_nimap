@@ -1,6 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import NavBar from '../navbar/navbar';
-const Home = () => {
+import {useNavigate} from 'react-router-dom';
+const Home = (props) => {
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (props.loggedInUser == null) {
+            navigate('/login');
+        }
+    }, [props.loggedInUser]);
     const [dropDownVal, setDropDownVal] = useState('-1');
     const [selectedOptionObj, setSelectedObj] = useState(null);
     const DropDownInformation = [

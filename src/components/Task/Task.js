@@ -9,7 +9,9 @@ import { Formik, Form, Field } from 'formik';
 import NavBar from '../navbar/navbar';
 import * as Yup from 'yup';
 import taskListCss from './task.module.css';
+import {useNavigate} from 'react-router-dom';
 const Task = (props) => {
+    const navigate = useNavigate();
     const [tasklist, setTasklist] = useState([]);
     const [addTaskShow, setAddTaskShow] = useState(false)
     useEffect(() => {
@@ -33,6 +35,11 @@ const Task = (props) => {
             console.log(error, 'error');            
         }
     }, []);
+    useEffect(() => {
+        if (props.loggedInUser == null) {
+            navigate('/login');
+        }
+    }, [props.loggedInUser]);
     // console.log(tasklist, 'tasklist');
     const deleteTask = (id) => {
         let updatedTaskList = [...tasklist];

@@ -1,4 +1,4 @@
-import React , {useState} from 'react';
+import React , {useState, useEffect} from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import Container from 'react-bootstrap/Container';
@@ -6,9 +6,10 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import LogInCSS from './login.module.css';
 import { addMonths } from 'date-fns';
-import {Link, Navigate} from 'react-router-dom';
+import {Link, Navigate, useNavigate} from 'react-router-dom';
 const bcrypt = require('bcryptjs');
 const LogIn = (props) => {
+    const navigate = useNavigate();
     const [isWrongPassword, setIsWrongPassword] = useState(false);
     const [isNot_A_User, setIsNot_A_User] = useState(false);
     const [isSuccessLogged, setIsLoggedIn] = useState(false);
@@ -28,6 +29,11 @@ const LogIn = (props) => {
             placeholder: 'Please Enter Password'
         },
     ];
+    useEffect(() => {
+        if (props.loggedInUser != null) {
+            navigate('/');
+        }
+    }, [props.loggedInUser]);
     return (
         <>
             <div className="mt-5">
@@ -103,11 +109,11 @@ const LogIn = (props) => {
                                 })
                             }
                             {
-                                isWrongPassword ? 'password wrong' : isNot_A_User ? 'not a user' : ""
+                                isWrongPassword ? <p className='text-danger mt-3'>Password is not correct! please try again</p> : isNot_A_User ? <p className='text-danger mt-3'>Email Id is not registered !!</p>: ""
                             }
-                            <div>
-                                <button type="submit" className='btn-success btn mt-3 col-1'>Login</button>
-                                <Link to='/signup' className={["btn-warning btn" ,"mt-3" ,"col-1", "ml-2"].join(' ')}>Sign Up</Link>
+                            <div className='mt-4'>
+                                <button type="submit" className='btn-success btn mt-3 col-1 m-3'>Login</button>
+                                <Link to='/signup' className={["btn-warning btn" ,"mt-3" ,"col-1", "m-3", "text-white"].join(' ')}>Sign Up</Link>
                             </div>
                             {isSuccessLogged && <Navigate to='/user'/>}
                         </Container>

@@ -7,9 +7,9 @@ const Dropdown = (props) => {
                 <Col md={4}>
                     <select className="form-control mt-5" value={props.dropDownVal} onChange={(e) => props.onChangeDropDown(e.target.value)}>
                         {
-                            props.DropDownInformation.map(dropdown => {
+                            props.DropDownInformation.map((dropdown, index) => {
                                 return (
-                                    <option value={dropdown.id} selected={dropdown.selected} disabled={dropdown.isDisabled}>{dropdown.optionName}</option>
+                                    <option value={dropdown.id} selected={dropdown.selected} disabled={dropdown.isDisabled} key={index}>{dropdown.optionName}</option>
                                 )
                             })
                         }

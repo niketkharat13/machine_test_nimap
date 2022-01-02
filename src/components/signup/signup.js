@@ -1,12 +1,18 @@
-import React , {useState} from 'react';
+import React , {useState,useEffect} from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import signupCSS from './signup.module.css';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 const SignUp = (props) => {
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (props.loggedInUser != null) {
+            navigate('/');
+        }
+    }, [props.loggedInUser]);
     const [userExisted, setIsUserExisted] = useState(false);
     const [isUserCreated, setIsUserCreated] = useState(false);
     const formInputControl = [

@@ -4,8 +4,9 @@ import './App.css';
   BrowserRouter,
   Routes,
   Route,
-  Navigate
+  // useNavigate
 } from "react-router-dom";
+import Loader from './components/loader/loader';
 const Login = React.lazy(() => import('./components/login/login'));
 const SignUp = React.lazy(() => import('./components/signup/signup'));
 const User = React.lazy(() => import('./components/User/User'));
@@ -16,6 +17,7 @@ const bcrypt = require('bcryptjs');
 function App() {
   const [loggedInUser, setIsLoggedInUSer] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const navigate = useNavigate();
   useEffect(() => {
     try {
       if (loggedInUser == null) {
@@ -55,33 +57,34 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/signup" element={
-            <Suspense fallback={<div>Loading...</div>}>
-              <SignUp encryptPassword={encryptPassword} />
+            <Suspense fallback={<Loader />}>
+              <SignUp encryptPassword={encryptPassword} loggedInUser={loggedInUser} />
             </Suspense>
           }/>
           <Route path="/login" element={
-            <Suspense fallback={<div>Loading...</div>}>
-              <Login setIsLoggedInUSer={setIsLoggedInUSer} decryptPassword={decryptPassword} />
+            <Suspense fallback={<Loader />}>
+              <Login 
+                setIsLoggedInUSer={setIsLoggedInUSer} 
+                decryptPassword={decryptPassword} 
+                loggedInUser={loggedInUser}
+              />
             </Suspense>
           }/>
           <Route path="/user" element={
-            <Suspense fallback={<div>Loading...</div>}>
-              <User loggedInUser={loggedInUser} encryptPassword={encryptPassword} />
+            <Suspense fallback={<Loader />}>
+              <User loggedInUser={loggedInUser} encryptPassword={encryptPassword} setIsLoggedInUSer={setIsLoggedInUSer} setIsLoggedIn={setIsLoggedIn} />
             </Suspense>
           }/>
           <Route path="/task" element={
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<Loader/>}>
               <Task userDetails={loggedInUser} />
             </Suspense>
           }/>
-          <Route path="/home" element={
-            <Suspense fallback={<div>Loading...</div>}>
-              <Home userDetails={loggedInUser} />
+          <Route path="/" element={
+            <Suspense fallback={<Loader />}>
+              <Home loggedInUser={loggedInUser} />
             </Suspense>
           }/>
-          {/* <Route path="/" element={<>
-            testing
-          </>}/> */}
         </Routes>
         {/* {
           !isLoggedIn ? <Navigate to='/login' /> : null

@@ -11,28 +11,22 @@ const NavBar = (props) => {
         <>
             <Navbar bg="dark" variant="dark">
                 <Container>
-                    <Navbar.Brand href="#home">
+                    <Navbar.Brand>
                         Machine Test - Nimap
                     </Navbar.Brand>
                     <Nav className="me-auto">
                         <NavLink
                             activeClassName="selected"
                             className="nav-link"
-                            to={{
-                                pathname: "/home",
-                            }}
+                            to="/"
                         >Home</NavLink>
                         <NavLink
                             className='nav-link'
-                            to={{
-                                pathname: "/task",
-                            }}
+                            to="/task"
                         >Tasks</NavLink>
                         <NavLink
                             className='nav-link'
-                            to={{
-                                pathname: "/user",
-                            }}
+                            to="/user"
                         >User</NavLink>
                     </Nav>
                     
