@@ -5,8 +5,10 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import signupCSS from './signup.module.css';
+import {Link} from 'react-router-dom';
 const SignUp = (props) => {
     const [userExisted, setIsUserExisted] = useState(false);
+    const [isUserCreated, setIsUserCreated] = useState(false);
     const formInputControl = [
         {
             label: 'First Name',
@@ -73,7 +75,7 @@ const SignUp = (props) => {
                                 .min(8, 'Too Short!')
                                 .max(15, 'Too Long!')
                                 .required('Password is required'),
-                            confirmPassword: Yup.string().required('please')
+                            confirmPassword: Yup.string().required('Please Enter Confirm Password')
                                .oneOf([Yup.ref('password'), null], 'Passwords must match')                          
                         })
                     }
@@ -103,6 +105,7 @@ const SignUp = (props) => {
                                 cp: encrypted.cp
                             })
                             localStorage.setItem('registeredUserList', JSON.stringify(usersValue))
+                            setIsUserCreated(true);
                         } catch (error) {
                             console.log(error)
                         }
@@ -118,7 +121,7 @@ const SignUp = (props) => {
                             {
                                 formInputControl.map((input, index) => {
                                     return (
-                                        <Row key={index} className="mt-2">
+                                        <Row key={index} className="mt-3">
                                             <Col md={4}>
                                                 <label htmlFor={input.id} className="w-100 h-100 d-flex align-items-center justify-content-end">{input.label}</label>
                                             </Col>
@@ -136,9 +139,17 @@ const SignUp = (props) => {
                                 })
                             }
                             {
-                                userExisted ?  <p className={["m-2", signupCSS.errormsg].join(" ")}>email id is already existed</p> : null
+                                userExisted ?  <p className={["m-2", signupCSS.errormsg].join(" ")}>Email ID is Already Existed</p> : null
                             }
-                            <button type="submit" className='btn-primary btn mt-3'>Submit</button>
+                            {
+                                isUserCreated ? <p className={["m-2", "text-success"].join(' ')}>
+                                    User Successfully Created !!
+                                </p> : null
+                            }
+                            <div className='mt-3'>
+                                <button type="submit" className='btn-success btn mt-3 m-3 col-1'>Signup</button>
+                                <Link to="/login" className={[signupCSS.loginLink, 'btn-warning btn' ,'mt-3' ,'m-3','col-1'].join(' ')}>Login</Link>
+                            </div>
                         </Container>
                     </Form>
                 )}

@@ -1,3 +1,10 @@
 .errormsg {
     color: red;
 }
+.loginLink{
+    color: white;
+    text-decoration: none;
+}
+.loginLink:hover{
+    color: white;
+}

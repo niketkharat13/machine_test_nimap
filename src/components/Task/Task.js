@@ -6,7 +6,9 @@ import Col from 'react-bootstrap/Col';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { Formik, Form, Field } from 'formik';
+import NavBar from '../navbar/navbar';
 import * as Yup from 'yup';
+import taskListCss from './task.module.css';
 const Task = (props) => {
     const [tasklist, setTasklist] = useState([]);
     const [addTaskShow, setAddTaskShow] = useState(false)
@@ -41,7 +43,9 @@ const Task = (props) => {
     }
     return (
         <>
-            <Container>
+            <NavBar/>
+            <Container className="mt-5">
+                <h3 className={taskListCss.tasklistHeading}>Task List</h3>
                 <table className="table table-striped table-bordered">
                     <thead>
                         <tr>
@@ -54,7 +58,6 @@ const Task = (props) => {
                     <tbody>
                         {
                             tasklist.map((task, index) => {
-                                console.log(task);
                                 return (
                                     <tr key={index}>
                                         <td>{index + 1}</td>
@@ -69,7 +72,9 @@ const Task = (props) => {
                         }
                     </tbody>
                 </table>
-                <button className='btn btn-primary' onClick={() => setAddTaskShow(true)}>Add Task</button>
+                <div className='d-flex mt-4 mb-5'>
+                    <button className={['btn','btn-primary', taskListCss.addButton].join(' ')} onClick={() => setAddTaskShow(true)}>Add Task</button>
+                </div>
             </Container>
             <Modal show={addTaskShow} onHide={() => setAddTaskShow(false)}>
                 <Modal.Header closeButton>
@@ -117,12 +122,12 @@ const Task = (props) => {
                                                 <label htmlFor="task_name" className="w-100 h-100 d-flex align-items-center justify-content-end">Task Name</label>
                                             </Col>
                                             <Col md={8}>
-                                                <Field name="taskName" className="form-control w-100" placeholder="Please enter task name" id="task_name" type="text" />
+                                                <Field name="taskName" className={["form-control ","w-100", errors.taskName && touched.taskName ? taskListCss.addErrorTextBox : ''].join(' ')} placeholder="Please enter task name" id="task_name" type="text" />
                                             </Col>
                                             <Row>
                                                 <Col md={3}></Col>
                                                 <Col md={8}>{errors.taskName && touched.taskName ? (
-                                                    <p className={["text-start","m-2"].join(" ")}>{errors.taskName}</p>
+                                                    <p className={["text-start","m-2", taskListCss.addTaskError].join(" ")}>{errors.taskName}</p>
                                                 ) : null}</Col>
                                             </Row>
                                         </Row>
@@ -131,7 +136,7 @@ const Task = (props) => {
                                                 <label htmlFor="task_status" className="w-100 h-100 d-flex align-items-center justify-content-end">Task Name</label>
                                             </Col>
                                             <Col md={8}>
-                                                <Field name="taskStatus" className="form-control" id="task_name" as="select">
+                                                <Field name="taskStatus" className={["form-control", errors.taskStatus && touched.taskStatus ?taskListCss.addErrorTextBox : ''].join(' ')} id="task_name" as="select">
                                                     <option disabled value="-1">
                                                         Select Status
                                                     </option>
@@ -146,7 +151,7 @@ const Task = (props) => {
                                             <Row>
                                                 <Col md={3}></Col>
                                                 <Col md={8}>{errors.taskStatus && touched.taskStatus ? (
-                                                    <p className={["text-start","m-2"].join(" ")}>{errors.taskStatus}</p>
+                                                    <p className={["text-start","m-2", taskListCss.addTaskError].join(" ")}>{errors.taskStatus}</p>
                                                 ) : null}</Col>
                                             </Row>
                                         </Row>

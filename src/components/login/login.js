@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import LogInCSS from './login.module.css';
 import { addMonths } from 'date-fns';
-import {Navigate} from 'react-router-dom';
+import {Link, Navigate} from 'react-router-dom';
 const bcrypt = require('bcryptjs');
 const LogIn = (props) => {
     const [isWrongPassword, setIsWrongPassword] = useState(false);
@@ -27,7 +27,7 @@ const LogIn = (props) => {
             inputType: "password",
             placeholder: 'Please Enter Password'
         },
-    ]
+    ];
     return (
         <>
             <div className="mt-5">
@@ -63,7 +63,6 @@ const LogIn = (props) => {
                                             decryptedPassword: props.decryptPassword(userDetails[0].cp)
                                         });
                                         setIsLoggedIn(true);
-                                        // Thu, 01 Jan 1970 00:00:00 UTC
                                     } else {
                                         setIsWrongPassword(true);
                                     }
@@ -106,8 +105,10 @@ const LogIn = (props) => {
                             {
                                 isWrongPassword ? 'password wrong' : isNot_A_User ? 'not a user' : ""
                             }
-                            <button type="submit" className='btn-primary btn mt-3'>Login</button>
-                            <button className='btn-secondary btn mt-3'>Sign Up</button>
+                            <div>
+                                <button type="submit" className='btn-success btn mt-3 col-1'>Login</button>
+                                <Link to='/signup' className={["btn-warning btn" ,"mt-3" ,"col-1", "ml-2"].join(' ')}>Sign Up</Link>
+                            </div>
                             {isSuccessLogged && <Navigate to='/user'/>}
                         </Container>
                     </Form>

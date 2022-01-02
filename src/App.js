@@ -10,6 +10,7 @@ const Login = React.lazy(() => import('./components/login/login'));
 const SignUp = React.lazy(() => import('./components/signup/signup'));
 const User = React.lazy(() => import('./components/User/User'));
 const Task = React.lazy(() => import('./components/Task/Task'));
+const Home = React.lazy(() => import('./components/Home/home'));
 let CryptoJS = require("crypto-js");
 const bcrypt = require('bcryptjs');
 function App() {
@@ -71,6 +72,11 @@ function App() {
           <Route path="/task" element={
             <Suspense fallback={<div>Loading...</div>}>
               <Task userDetails={loggedInUser} />
+            </Suspense>
+          }/>
+          <Route path="/home" element={
+            <Suspense fallback={<div>Loading...</div>}>
+              <Home userDetails={loggedInUser} />
             </Suspense>
           }/>
           {/* <Route path="/" element={<>
