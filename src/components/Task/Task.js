@@ -18,11 +18,11 @@ const Task = (props) => {
     useEffect(() => {
         try {
             let taskList = [];
-            console.log(localStorage.getItem('task_list'));
+            // console.log(localStorage.getItem('task_list'));
             if (localStorage.getItem('task_list') == null) {
-                console.log('task_list', localStorage.getItem('task_list'));
+                // console.log('task_list', localStorage.getItem('task_list'));
                 axios.get('http://jsonplaceholder.typicode.com/todos').then(data => {
-                    console.log(data, 'api then')
+                    // console.log(data, 'api then')
                     taskList = data.data.filter(task => task.userId == props.loggedInUser.id);
                     localStorage.setItem('task_list', JSON.stringify(taskList));
                 }).catch(err => {
@@ -41,8 +41,8 @@ const Task = (props) => {
             navigate('/login');
         }
     }, [props.loggedInUser]);
-    console.log(tasklist, 'tasklist');
-    console.log(props, 'props');
+    // console.log(tasklist, 'tasklist');
+    // console.log(props, 'props');
     const deleteTask = (id) => {
         let updatedTaskList = [...tasklist];
         let index = tasklist.findIndex(task => task.id === id);

@@ -86,16 +86,16 @@ const SignUp = (props) => {
                         })
                     }
                     onSubmit={values => {
-                        console.log(values, 'values')
+                        // console.log(values, 'values')
                         // same shape as initial values
                         try {
                             let registeredUserList = localStorage.getItem('registeredUserList');
-                            console.log(!registeredUserList, 'registeredUserList');
+                            // console.log(!registeredUserList, 'registeredUserList');
                             let usersValue = [];
                             if (registeredUserList !== null) {
-                                console.log("inside")
+                                // console.log("inside")
                                 usersValue = JSON.parse(registeredUserList);
-                                console.log(usersValue, 'usersValue');
+                                // console.log(usersValue, 'usersValue');
                                 let isUserExisted = usersValue.filter(u => u.email === values.email);
                                 if (isUserExisted.length > 0) {
                                     setIsUserExisted(true);

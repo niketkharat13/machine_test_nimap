@@ -59,7 +59,7 @@ const LogIn = (props) => {
                                 let userDetails = registeredUserList.filter(u => u.email === values.email);
                                 if (userDetails.length > 0) {
                                     let doesPasswordMatch = bcrypt.compareSync(values.password, userDetails[0].password);
-                                    console.log(doesPasswordMatch, 'doesPasswordMatch');
+                                    // console.log(doesPasswordMatch, 'doesPasswordMatch');
                                     if (doesPasswordMatch) {
                                         setIsWrongPassword(false);
                                         setIsNot_A_User(false);

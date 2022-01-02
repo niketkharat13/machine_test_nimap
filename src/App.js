@@ -24,7 +24,7 @@ function App() {
         let userCookie = document.cookie.split('; ').filter(row => row.startsWith("logged_in_user"));
         if (userCookie.length > 0) {
           let userDetails = JSON.parse(userCookie[0].split("logged_in_user=")[1]);
-          console.log(userDetails, 'userDetails')
+          // console.log(userDetails, 'userDetails')
           setIsLoggedInUSer({
             ...userDetails,
             decryptedPassword: decryptPassword(userDetails.cp)
@@ -38,9 +38,9 @@ function App() {
     
   }, []);
   // console.log(loggedInUser, 'loggedInUser');
-  console.log(isLoggedIn, 'isLoggedIn')
+  // console.log(isLoggedIn, 'isLoggedIn')
   const decryptPassword  = (cp) => {
-    console.log(cp, 'cp');
+    // console.log(cp, 'cp');
     let bytes  = CryptoJS.AES.decrypt(cp, 'secret key 123');
     return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
   }
