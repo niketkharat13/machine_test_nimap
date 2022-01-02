@@ -137,7 +137,7 @@ const Task = (props) => {
                                     <div className="modal-body">
                                         <Row className="mt-4">
                                             <Col md={3}>
-                                                <label htmlFor="task_name" className="w-100 h-100 d-flex align-items-center justify-content-end">Task Name</label>
+                                                <label htmlFor="task_name" className="w-100 h-100 d-flex align-items-center">Task Name</label>
                                             </Col>
                                             <Col md={8}>
                                                 <Field name="taskName" className={["form-control ","w-100", errors.taskName && touched.taskName ? taskListCss.addErrorTextBox : ''].join(' ')} placeholder="Please enter task name" id="task_name" type="text" />
@@ -151,7 +151,7 @@ const Task = (props) => {
                                         </Row>
                                         <Row className="mt-4">
                                             <Col md={3}>
-                                                <label htmlFor="task_status" className="w-100 h-100 d-flex align-items-center justify-content-end">Task Name</label>
+                                                <label htmlFor="task_status" className="w-100 h-100 d-flex align-items-center">Task Status</label>
                                             </Col>
                                             <Col md={8}>
                                                 <Field name="taskStatus" className={["form-control", errors.taskStatus && touched.taskStatus ?taskListCss.addErrorTextBox : ''].join(' ')} id="task_name" as="select">

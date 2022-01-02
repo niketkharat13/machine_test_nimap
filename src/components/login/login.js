@@ -91,16 +91,16 @@ const LogIn = (props) => {
                                 formInputControl.map((input, index) => {
                                     return (
                                         <Row key={index} className="mt-4">
-                                            <Col md={4}>
-                                                <label htmlFor={input.id} className="w-100 h-100 d-flex align-items-center justify-content-end">{input.label}</label>
+                                            <Col md={2}>
+                                                <label htmlFor={input.id} className="w-100 h-100 d-flex align-items-center">{input.label}</label>
                                             </Col>
-                                            <Col md={4}>
+                                            <Col md={5}>
                                                 <Field name={input.formikKey} className="form-control" placeholder={input.placeholder} id={input.id} type={input.inputType} />
                                                 
                                             </Col>
                                             <Row>
-                                                <Col md={4}></Col>
-                                                <Col md={4}>{errors[input.formikKey] && touched[input.formikKey] ? (
+                                                <Col md={2}></Col>
+                                                <Col md={5}>{errors[input.formikKey] && touched[input.formikKey] ? (
                                                     <p className={["text-start","m-2", LogInCSS.errormsg].join(" ")}>{errors[input.formikKey]}</p>
                                                 ) : null}</Col>
                                             </Row>
@@ -111,10 +111,16 @@ const LogIn = (props) => {
                             {
                                 isWrongPassword ? <p className='text-danger mt-3'>Password is not correct! please try again</p> : isNot_A_User ? <p className='text-danger mt-3'>Email Id is not registered !!</p>: ""
                             }
-                            <div className='mt-4'>
-                                <button type="submit" className='btn-success btn mt-3 col-1 m-3'>Login</button>
-                                <Link to='/signup' className={["btn-warning btn" ,"mt-3" ,"col-1", "m-3", "text-white"].join(' ')}>Sign Up</Link>
-                            </div>
+                            <Row>
+                                <Col md={2}></Col>
+                                <Col md={4}>
+                                    <div className='mt-4 d-flex justify-content-start'>
+                                        <button type="submit" className='btn-success btn mt-3 col-sm-6 m-3'>Login</button>
+                                        <Link to='/signup' className={["btn-warning btn" ,"mt-3" , "col-sm-6", "m-3", "text-white"].join(' ')}>Sign Up</Link>
+                                    </div>
+
+                                </Col>
+                            </Row>
                             {isSuccessLogged && <Navigate to='/user'/>}
                         </Container>
                     </Form>

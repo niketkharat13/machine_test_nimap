@@ -49,7 +49,7 @@ const User = (props) => {
                         <h3 className='m-3 text-start mb-5'>User Details</h3>
                         <Row className="mr-3 mb-3">
                             <Col md={2}>
-                                Username
+                                <label className="w-100 h-100 d-flex align-items-center">Username</label>
                             </Col>
                             <Col md={3}>
                                 <input type="text" value={props.loggedInUser.email} disabled className="form-control" />
@@ -58,7 +58,8 @@ const User = (props) => {
                         {
                             !isChangePWD ? 
                                 <Row className="mt-3 mb-3">
-                                    <Col md={2}>Password
+                                    <Col md={2}>
+                                        <label className="w-100 h-100 d-flex align-items-center">Password</label>
                                     </Col>
                                     <Col md={3}>
                                         <input type="password" value={props.loggedInUser.decryptedPassword} disabled className="form-control" />
@@ -103,7 +104,9 @@ const User = (props) => {
                                             formInputControl.map((input, index) => {
                                                 return (
                                                     <Row key={index} className="mt-4 mb-3">
-                                                        <Col md={2}>{input.label}</Col>
+                                                        <Col md={2}>
+                                                            <label className="w-100 h-100 d-flex align-items-center">{input.label}</label>
+                                                        </Col>
                                                         <Col md={3}>
                                                             <Field name={input.formikKey} className="form-control" placeholder={input.placeholder} id={input.id} type={input.inputType} />
                                                             
@@ -122,13 +125,13 @@ const User = (props) => {
                                             isPasswordChanged ? <p className='text-success mt-5'>Password changed successfully !!!</p> : null
                                         }
                                         {isChangePWD ?  <Row>
-                                            <Col md={2}>
+                                            <Col md={2} xs={12}>
                                                 <button type="submit" className='btn-success btn mt-3'>Save Password</button>
                                             </Col>
-                                            <Col md={1}>
+                                            <Col md={1} xs={12}>
                                                 {logoutBtn}
                                             </Col>
-                                            <Col md={2}>
+                                            <Col md={2} xs={12}>
                                                 <button type="button" className='btn-info text-white btn mt-3' onClick={() => setIsChangePWD(false)}>Close</button>
                                             </Col>
                                         </Row> :null}
@@ -138,10 +141,10 @@ const User = (props) => {
                         }
                         {!isChangePWD ? 
                                 <Row> 
-                                    <Col md={2}>
+                                    <Col md={2} xs={6}>
                                         <button className='btn-warning btn mt-3 text-white' onClick={() => setIsChangePWD(true)}>Change Password</button>
                                     </Col>
-                                    <Col md={1}>
+                                    <Col md={1} xs={6}>
                                         {logoutBtn} 
                                     </Col> 
                             </Row>: null

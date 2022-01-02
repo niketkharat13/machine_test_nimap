@@ -99,6 +99,9 @@ const SignUp = (props) => {
                                 let isUserExisted = usersValue.filter(u => u.email === values.email);
                                 if (isUserExisted.length > 0) {
                                     setIsUserExisted(true);
+                                    setTimeout(() => {
+                                        setIsUserExisted(false);
+                                    }, 5000);
                                     return;
                                 }
                             }
@@ -119,9 +122,6 @@ const SignUp = (props) => {
                         } catch (error) {
                             console.log(error)
                         }
-                        // const doesPasswordMatch = bcrypt.compareSync("Niket@8184", bcrypt.hashSync(values.password, bcrypt.genSaltSync()))
-                        // console.log(doesPasswordMatch);
-
                     }}
                 >
                 {({ errors, touched }) => (
@@ -132,14 +132,14 @@ const SignUp = (props) => {
                                 formInputControl.map((input, index) => {
                                     return (
                                         <Row key={index} className="mt-3">
-                                            <Col md={4}>
-                                                <label htmlFor={input.id} className="w-100 h-100 d-flex align-items-center justify-content-end">{input.label}</label>
+                                            <Col md={2}>
+                                                <label htmlFor={input.id} className="w-100 h-100 d-flex align-items-center">{input.label}</label>
                                             </Col>
                                             <Col md={4}>
                                                 <Field name={input.formikKey} className="form-control" placeholder={input.placeholder} id={input.id} type={input.inputType} />
                                             </Col>
                                             <Row className="test">
-                                                <Col md={4}></Col>
+                                                <Col md={2}></Col>
                                                 <Col md={4}>{errors[input.formikKey] && touched[input.formikKey] ? (
                                                     <p className={["text-start","m-2", signupCSS.errormsg].join(" ")}>{errors[input.formikKey]}</p>
                                                 ) : null}</Col>
@@ -148,18 +148,29 @@ const SignUp = (props) => {
                                     )
                                 })
                             }
-                            {
-                                userExisted ?  <p className={["m-2", signupCSS.errormsg].join(" ")}>Email ID is Already Existed</p> : null
-                            }
-                            {
-                                isUserCreated ? <p className={["m-2", "text-success"].join(' ')}>
-                                    User Successfully Created !!
-                                </p> : null
-                            }
-                            <div className='mt-3'>
-                                <button type="submit" className='btn-success btn mt-3 m-3 col-1'>Signup</button>
-                                <Link to="/login" className={[signupCSS.loginLink, 'btn-warning btn' ,'mt-3' ,'m-3','col-1'].join(' ')}>Login</Link>
-                            </div>
+                            <Row>
+                                <Col md={2}></Col>
+                                <Col md={4}>
+                                    {
+                                        userExisted ?  <p className={["m-2", signupCSS.errormsg].join(" ")}>Email ID is Already Existed</p> : null
+                                    }
+                                    {
+                                        isUserCreated ? <p className={["m-2", "text-success"].join(' ')}>
+                                            User Successfully Created !!
+                                        </p> : null
+                                    }
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col md={2}></Col>
+                                <Col md={4}>
+                                    <div className='mt-3'>
+                                        <button type="submit" className='btn-success btn mt-3 m-3'>Signup</button>
+                                        <Link to="/login" className={[signupCSS.loginLink, 'btn-warning btn' ,'mt-3' ,'m-3'].join(' ')}>Login</Link>
+                                    </div>
+                                </Col>
+                            </Row>
+                            
                         </Container>
                     </Form>
                 )}

@@ -8,28 +8,29 @@ const Information = React.lazy(() => import('../Information/Information'));
 const NavBar = (props) => {
     return (
         <>
-            <Navbar bg="dark" variant="dark">
+            <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
                 <Container>
-                    <Navbar.Brand>
-                        Machine Test - Nimap
-                    </Navbar.Brand>
-                    <Nav className="me-auto">
-                        <NavLink
-                            className="nav-link"
-                            to="/"
-                        >Home</NavLink>
-                        <NavLink
-                            className='nav-link'
-                            to="/task"
-                        >Tasks</NavLink>
-                        <NavLink
-                            className='nav-link'
-                            to="/user"
-                        >User</NavLink>
-                    </Nav>
-                    
+                    <Navbar.Brand href="#home">  Machine Test - Nimap</Navbar.Brand>
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Navbar.Collapse id="responsive-navbar-nav">
+                        <Nav className="me-auto">
+                            <NavLink
+                                className="nav-link"
+                                to="/"
+                            >Home</NavLink>
+                            <NavLink
+                                className='nav-link'
+                                to="/task"
+                            >Tasks</NavLink>
+                            <NavLink
+                                className='nav-link'
+                                to="/user"
+                            >User</NavLink>
+                        </Nav>
+                    </Navbar.Collapse>
                 </Container>
             </Navbar>
+            
             {
                 props.isHomePage ? 
                 <>
