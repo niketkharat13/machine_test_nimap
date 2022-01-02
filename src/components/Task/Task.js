@@ -10,6 +10,7 @@ import NavBar from '../navbar/navbar';
 import * as Yup from 'yup';
 import taskListCss from './task.module.css';
 import {useNavigate} from 'react-router-dom';
+import { Icon } from '@iconify/react';
 const Task = (props) => {
     const navigate = useNavigate();
     const [tasklist, setTasklist] = useState([]);
@@ -22,7 +23,7 @@ const Task = (props) => {
                 console.log('task_list', localStorage.getItem('task_list'));
                 axios.get('http://jsonplaceholder.typicode.com/todos').then(data => {
                     console.log(data, 'api then')
-                    taskList = data.data.filter(task => task.userId == props.userDetails.id);
+                    taskList = data.data.filter(task => task.userId == props.loggedInUser.id);
                     localStorage.setItem('task_list', JSON.stringify(taskList));
                 }).catch(err => {
                     console.log(err, 'error');
@@ -40,7 +41,8 @@ const Task = (props) => {
             navigate('/login');
         }
     }, [props.loggedInUser]);
-    // console.log(tasklist, 'tasklist');
+    console.log(tasklist, 'tasklist');
+    console.log(props, 'props');
     const deleteTask = (id) => {
         let updatedTaskList = [...tasklist];
         let index = tasklist.findIndex(task => task.id === id);
@@ -71,7 +73,12 @@ const Task = (props) => {
                                         <td>{task.title}</td>
                                         <td>{task.completed?.toString()}</td>
                                         <td>
-                                            <button className='btn btn-danger' onClick={() => deleteTask(task.id)}>Delete</button>
+                                            <Icon icon="carbon:delete" style={{
+                                                fontSize: '24px',
+                                                cursor: 'pointer',
+                                                color: 'red'
+                                            }} onClick={() => deleteTask(task.id)} />
+                                            {/* <button className='btn btn-danger' onClick={() => deleteTask(task.id)}>Delete</button> */}
                                         </td>
                                     </tr>
                                 )
@@ -107,13 +114,14 @@ const Task = (props) => {
                             let updatedTaskList = [...tasklist];
                             updatedTaskList.push({
                                 id: updatedTaskList.length + 1,
-                                userId: props.userDetails.id,
+                                userId: props.loggedInUser.id,
                                 title: values.taskName,
                                 completed: values.taskStatus
                             });
                             localStorage.setItem('task_list', JSON.stringify(updatedTaskList));
                             setAddTaskShow(false);
                             setTasklist(updatedTaskList)
+                            // setIsTaskAdd
                         } catch (error) {
                             console.log(error)
                         }
@@ -168,7 +176,7 @@ const Task = (props) => {
                                             Add Task
                                         </Button>
                                         <Button type='submit' variant="secondary" onClick={() => setAddTaskShow(false)}>
-                                            close
+                                            Close
                                         </Button>
                                     </div>
                                 </>

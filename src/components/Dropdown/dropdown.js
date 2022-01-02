@@ -9,7 +9,7 @@ const Dropdown = (props) => {
                         {
                             props.DropDownInformation.map((dropdown, index) => {
                                 return (
-                                    <option value={dropdown.id} selected={dropdown.selected} disabled={dropdown.isDisabled} key={index}>{dropdown.optionName}</option>
+                                    <option value={dropdown.id} defaultValue={dropdown.selected} disabled={dropdown.isDisabled} key={index}>{dropdown.optionName}</option>
                                 )
                             })
                         }

@@ -6,7 +6,6 @@ import {NavLink} from 'react-router-dom';
 const Dropdown = React.lazy(() => import('../Dropdown/dropdown'));
 const Information = React.lazy(() => import('../Information/Information'));
 const NavBar = (props) => {
-    console.log(props.DropDownInformation, 'props.DropDownInformation', props.isHomePage);
     return (
         <>
             <Navbar bg="dark" variant="dark">

@@ -77,7 +77,7 @@ function App() {
           }/>
           <Route path="/task" element={
             <Suspense fallback={<Loader/>}>
-              <Task userDetails={loggedInUser} />
+              <Task loggedInUser={loggedInUser} />
             </Suspense>
           }/>
           <Route path="/" element={

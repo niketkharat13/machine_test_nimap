@@ -31,6 +31,7 @@ const User = (props) => {
             document.cookie = `logged_in_user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
             props.setIsLoggedInUSer(null);
             props.setIsLoggedIn(false);
+            localStorage.removeItem('task_list');
             navigate('/login');
         } catch (error) {
             console.log(error, 'error');
