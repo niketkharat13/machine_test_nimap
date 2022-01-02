@@ -15,7 +15,6 @@ const NavBar = (props) => {
                     </Navbar.Brand>
                     <Nav className="me-auto">
                         <NavLink
-                            activeClassName="selected"
                             className="nav-link"
                             to="/"
                         >Home</NavLink>

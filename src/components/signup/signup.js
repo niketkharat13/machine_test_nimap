@@ -112,6 +112,10 @@ const SignUp = (props) => {
                             })
                             localStorage.setItem('registeredUserList', JSON.stringify(usersValue))
                             setIsUserCreated(true);
+                            setTimeout(() => {
+                                setIsUserCreated(false);
+                                navigate('/login');
+                            }, 5000);
                         } catch (error) {
                             console.log(error)
                         }

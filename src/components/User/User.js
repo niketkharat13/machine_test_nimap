@@ -9,6 +9,7 @@ import { addMonths } from 'date-fns';
 import NavBar from '../navbar/navbar';
 import {useNavigate} from 'react-router-dom';
 const User = (props) => {
+    const [isPasswordChanged, setIsPasswordChanged] = useState(false);
     const navigate = useNavigate();
     const formInputControl = [
         {
@@ -25,7 +26,7 @@ const User = (props) => {
         }
     }, [props.loggedInUser]);
     const [isChangePWD, setIsChangePWD] = useState(false);
-    console.log(props, 'props')
+    // console.log(props, 'props')
     const logout = () => {
         try {
             document.cookie = `logged_in_user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
@@ -81,12 +82,16 @@ const User = (props) => {
                                             let encrypted = props.encryptPassword(values.password)
                                             updatedUserDetails.password = encrypted.password;
                                             updatedUserDetails.cp = encrypted.cp;
-
                                             let registeredUserList = JSON.parse(localStorage.getItem('registeredUserList'));
                                             let userIndex = registeredUserList.findIndex((u) => u.email === updatedUserDetails.email);
                                             registeredUserList[userIndex] = updatedUserDetails;
                                             localStorage.setItem('registeredUserList', JSON.stringify(registeredUserList));
                                             document.cookie = `logged_in_user=${JSON.stringify(updatedUserDetails)}; expires=${addMonths(new Date(), 1)}; path=/`;
+                                            setIsPasswordChanged(true);
+                                            setTimeout(() => {
+                                                setIsPasswordChanged(false)
+                                            }, 5000);
+                                            setIsChangePWD(false);
                                         } catch (error) {
                                             console.log("error==>",error);
                                         }
@@ -113,6 +118,9 @@ const User = (props) => {
                                                 )
                                             })
                                         }
+                                        {
+                                            isPasswordChanged ? <p className='text-success mt-5'>Password changed successfully !!!</p> : null
+                                        }
                                         {isChangePWD ?  <Row>
                                             <Col md={2}>
                                                 <button type="submit" className='btn-success btn mt-3'>Save Password</button>
@@ -120,23 +128,25 @@ const User = (props) => {
                                             <Col md={1}>
                                                 {logoutBtn}
                                             </Col>
+                                            <Col md={2}>
+                                                <button type="button" className='btn-info text-white btn mt-3' onClick={() => setIsChangePWD(false)}>Close</button>
+                                            </Col>
                                         </Row> :null}
                                     </Form>
                                 )}
                             </Formik>
                         }
-                        
-                    {!isChangePWD ? 
-                            <Row> 
-                                <Col md={2}>
-                                    <button className='btn-warning btn mt-3 text-white' onClick={() => setIsChangePWD(true)}>Change Password</button>
-                                </Col>
-                                <Col md={1}>
-                                    {logoutBtn} 
-                                </Col> 
-                        </Row>: null
+                        {!isChangePWD ? 
+                                <Row> 
+                                    <Col md={2}>
+                                        <button className='btn-warning btn mt-3 text-white' onClick={() => setIsChangePWD(true)}>Change Password</button>
+                                    </Col>
+                                    <Col md={1}>
+                                        {logoutBtn} 
+                                    </Col> 
+                            </Row>: null
                         }
-                    
+                        
                     </Container>
                 </> : null
             }
